@@ -1,0 +1,26 @@
+{
+  "name": "clean_copresence_v0",
+  "version": "1.0.0",
+  "description": "28 Jan Multiplayer Web server",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RedHenDev/clean_copresence_v0.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RedHenDev/clean_copresence_v0/issues"
+  },
+  "homepage": "https://github.com/RedHenDev/clean_copresence_v0#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.5.4",
+    "socketio": "^1.0.0"
+  }
+}
