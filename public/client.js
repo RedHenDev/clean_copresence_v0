@@ -3,30 +3,29 @@ let players = {};
 let playerId;
 
 // listen for the currentPlayers event and update the positions of other players
-socket.on('currentPlayers', function(players) {
-  Object.keys(players).forEach(function(id) {
-    if (players[id].playerId === socket.id) {
-      addPlayer(players[id]);
-    } else {
-      console.log('add other players?');
-      //addOtherPlayers(players[id]);
-    }
-  });
+socket.on('currentPlayers', function(playersI) {
+  console.log(`Got updated list of players, mom!`);
+  players=playersI;
+  renderAll();
 });
 
 // listen for the newPlayer event and add new player
-socket.on('newPlayer', function(playerInfo) {
-  addOtherPlayers(playerInfo);
+socket.on('newPlayer', function(newplayers) {
+  console.log(`Newbie, mom!`);
+  //addOtherPlayers(playerInfo);
+  players=newplayers;
 });
 
 // listen for the playerMoved event and update the position of other players
 socket.on('playerMoved', function(playerInfo) {
-  movePlayer(playerInfo.playerId, playerInfo.x, playerInfo.y);
+  players=playerInfo;
+  renderAll();
+  //movePlayer(playerInfo.playerId, playerInfo.x, playerInfo.y);
 });
 
 // listen for the disconnect event and remove the disconnected player
 socket.on('subDisconnect', function(playerId) {
-  removePlayer(playerId);
+  delete players[playerId];
 });
 
 // send player movement data to the server
@@ -47,21 +46,29 @@ function preload(){
   sub=loadImage('player.png');
 }
 
+function renderAll(){
+  background(0);
+  for (let id in players) {
+    image(sub,players[id].x, 
+              players[id].y 
+              );
+  }
+}
+
 function setup(){
   createCanvas(400,400);
   background(0);
   playerId = Math.floor(Math.random() * 10000);
     
     socket.emit('playerId', playerId);
-    socket.on('playerPositions', newPositions => {
-        playerPositions = newPositions;
-    });
+    // socket.on('playerPositions', newPositions => {
+    //     playerPositions = newPositions;
+    // });
 }
 
 function draw(){
   background(0);
-  image(sub,playerId)
-  for (let id in players) {
-    image(sub,players[id].x, players[id].y, 10, 10);
-  }
+  //image(sub,playerId)
+  //image(sub,42,42);
+  renderAll();
 }

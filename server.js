@@ -17,22 +17,24 @@ io.on('connection', function(socket) {
 
   // create a new player and add it to our players object
   players[socket.id] = {
-    x: 300,
-    y: 300
+    x: Math.random()*300+64,
+    y: Math.random()*300+64
   };
 
   // send the players object to the new player
   socket.emit('currentPlayers', players);
+  socket.broadcast.emit('currentPlayers', players);
 
   // update all other players of the new player
-  socket.broadcast.emit('newPlayer', players[socket.id]);
+  //socket.broadcast.emit('newPlayer', players);
 
   // when a player moves, update the player data
   socket.on('playerMovement', function(movementData) {
-    players[socket.id].x = movementData.x;
-    players[socket.id].y = movementData.y;
+    players[socket.id].x += movementData.x;
+    players[socket.id].y += movementData.y;
     // emit a message to all players to update their positions
-    socket.broadcast.emit('playerMoved', players[socket.id]);
+    socket.emit('playerMoved', players);
+    socket.broadcast.emit('playerMoved', players);
   });
 
   // when a player disconnects, remove them from our players object
