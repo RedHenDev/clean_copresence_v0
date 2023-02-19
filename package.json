@@ -1,6 +1,6 @@
 {
   "name": "clean_copresence_v0",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "28 Jan Multiplayer Web server",
   "main": "client.js",
   "scripts": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/RedHenDev/clean_copresence_v0#readme",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "socket.io": "^4.5.4"
   }

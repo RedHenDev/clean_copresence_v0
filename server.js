@@ -3,6 +3,7 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const io = require('socket.io')(server);
+require('dotenv').config();
 
 let players = {};
 
@@ -46,6 +47,7 @@ io.on('connection', function(socket) {
   });
 });
 
-server.listen(8080, function() {
+const PORT = process.env.PORT;
+server.listen(PORT || 8080, function() {
   console.log(`Listening on ${server.address().port}`);
 });
