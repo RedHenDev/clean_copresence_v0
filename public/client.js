@@ -1,6 +1,7 @@
 const socket = io();
 let players = {};
 let playerId;
+let shade;
 
 // listen for the currentPlayers event and update the positions of other players
 socket.on('currentPlayers', function(playersI) {
@@ -49,6 +50,8 @@ function preload(){
 function renderAll(){
   background(0);
   for (let id in players) {
+    fill(players[id].shade);
+    circle(players[id].x,players[id].y-10,42);
     image(sub,players[id].x, 
               players[id].y 
               );
@@ -58,9 +61,22 @@ function renderAll(){
 function setup(){
   createCanvas(400,400);
   background(0);
+  imageMode(CENTER);
+  rectMode(CENTER);
   playerId = Math.floor(Math.random() * 10000);
+  let whatColour = Math.floor(Math.random()*3+1);
+  if (whatColour===1){
+    shade=[0,255,0];
+  } else if (whatColour===2){
+    shade=[0,255,255];
+  } else if (whatColour===3){
+    shade=[0,0,255];
+  } else {
+    shade=[255,255,255];
+  }
     
     socket.emit('playerId', playerId);
+    socket.emit('playerShade',shade);
     // socket.on('playerPositions', newPositions => {
     //     playerPositions = newPositions;
     // });
@@ -72,3 +88,4 @@ function draw(){
   //image(sub,42,42);
   renderAll();
 }
+

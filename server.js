@@ -19,7 +19,8 @@ io.on('connection', function(socket) {
   // create a new player and add it to our players object
   players[socket.id] = {
     x: Math.random()*300+64,
-    y: Math.random()*300+64
+    y: Math.random()*300+64,
+    shade: 0
   };
 
   // send the players object to the new player
@@ -38,6 +39,11 @@ io.on('connection', function(socket) {
     socket.broadcast.emit('playerMoved', players);
   });
 
+  socket.on('playerShade', function(whatShade) {
+    players[socket.id].shade = whatShade;
+    socket.broadcast.emit('playerMoved', players);
+  });
+  
   // when a player disconnects, remove them from our players object
   socket.on('disconnect', function() {
     console.log('user disconnected');
@@ -51,3 +57,4 @@ const port = process.env.PORT || 3000;
 server.listen(port, function() {
   console.log(`Listening on ${server.address().port}`);
 });
+
