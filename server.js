@@ -47,7 +47,7 @@ io.on('connection', function(socket) {
   });
 });
 
-const PORT = process.env.PORT;
-server.listen(PORT || 8080, function() {
+const port = process.env.PORT;
+server.listen(port || 8080, function() {
   console.log(`Listening on ${server.address().port}`);
 });
