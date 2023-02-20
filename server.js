@@ -41,6 +41,8 @@ io.on('connection', function(socket) {
 
   socket.on('playerShade', function(whatShade) {
     players[socket.id].shade = whatShade;
+    // Fire these off to trigger render.
+    socket.emit('playerMoved', players);
     socket.broadcast.emit('playerMoved', players);
   });
   

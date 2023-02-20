@@ -11,11 +11,11 @@ socket.on('currentPlayers', function(playersI) {
 });
 
 // listen for the newPlayer event and add new player
-socket.on('newPlayer', function(newplayers) {
-  console.log(`Newbie, mom!`);
-  //addOtherPlayers(playerInfo);
-  players=newplayers;
-});
+// socket.on('newPlayer', function(newplayers) {
+//   console.log(`Newbie, mom!`);
+//   //addOtherPlayers(playerInfo);
+//   players=newplayers;
+// });
 
 // listen for the playerMoved event and update the position of other players
 socket.on('playerMoved', function(playerInfo) {
@@ -51,7 +51,7 @@ function renderAll(){
   background(0);
   for (let id in players) {
     fill(players[id].shade);
-    circle(players[id].x,players[id].y-10,42);
+    circle(players[id].x,players[id].y,42);
     image(sub,players[id].x, 
               players[id].y 
               );
@@ -63,19 +63,19 @@ function setup(){
   background(0);
   imageMode(CENTER);
   rectMode(CENTER);
-  playerId = Math.floor(Math.random() * 10000);
-  let whatColour = Math.floor(Math.random()*3+1);
-  if (whatColour===1){
+  //playerId = Math.floor(Math.random() * 10000);
+  let whatColour = Math.floor(Math.random()*4);
+  if (whatColour===0){
+    shade=[255,0,0];
+  } else if (whatColour===1){
     shade=[0,255,0];
   } else if (whatColour===2){
-    shade=[0,255,255];
-  } else if (whatColour===3){
     shade=[0,0,255];
   } else {
     shade=[255,255,255];
   }
     
-    socket.emit('playerId', playerId);
+    //socket.emit('playerId', playerId);
     socket.emit('playerShade',shade);
     // socket.on('playerPositions', newPositions => {
     //     playerPositions = newPositions;
@@ -83,9 +83,9 @@ function setup(){
 }
 
 function draw(){
-  background(0);
+  //background(0);
   //image(sub,playerId)
   //image(sub,42,42);
-  renderAll();
+  //renderAll();
 }
 
